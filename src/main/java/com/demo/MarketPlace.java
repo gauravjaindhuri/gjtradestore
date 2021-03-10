@@ -1,5 +1,7 @@
 package com.demo;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -20,6 +22,12 @@ import com.demo.dao.data.Database;
 import com.demo.dao.model.TradeEntity;
 import com.demo.exception.LowerVersionException;
 
+/**
+ * @author Gaurav Jain
+ * 
+ *  This Class is holds all the business logic for this project . 
+ *
+ */
 @Service
 public class MarketPlace {
 
@@ -33,6 +41,10 @@ public class MarketPlace {
 	Scheduler scheduler =  null;
 	
 
+	/**
+	 * This method will return all the trades present in database  
+	 * @return
+	 */
 	public Set<TradeEntity> showAll() {
 
 		Set<TradeEntity> tradeList = database.getTradeList();
@@ -40,30 +52,44 @@ public class MarketPlace {
 		return tradeList;
 	}
 
+	/**
+	 * @param tradeId
+	 * @return This method will return all the trades present in database  having Trade id equal to tradeId
+	 */
 	public Set<TradeEntity> showTrade(String tradeId) {
-		
-		Set<TradeEntity> tradeList = database.getTrade(tradeId);
 
-		for (TradeEntity rr : tradeList) {
-			System.out.println(rr.getTradeId() + "|" + rr.getVersion() + "|" + rr.getCounterParty() + "|"
-					+ rr.getBookId() + "|" + rr.getMaturityDate() + "|" + rr.getCreatedDate() + "|" + rr.isExpired());
+		Set<TradeEntity> tradeList = database.getTrade(tradeId);
+		
+		DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+
+		for (TradeEntity trade : tradeList) {
+			System.out.println(trade.getTradeId() + "|" + trade.getVersion() + "|" + trade.getCounterParty() + "|"
+					+ trade.getBookId() + "|" + dateFormat.format(trade.getMaturityDate()) + "|"
+					+ dateFormat.format(trade.getCreatedDate()) + "|" + trade.isExpired());
 		}
-return tradeList ;
+		return tradeList;
 	}
 
+	
+	
+	/**
+	 * @param tentity
+	 * @throws LowerVersionException
+	 */
 	public void addTrade(TradeEntity tentity) throws LowerVersionException {
 		
 		Set<TradeEntity> allTrades = this.showAll();
 
-		Set<TradeEntity> sameTrade = allTrades.stream() // convert list to stream
+		Set<TradeEntity> sameTrade = allTrades.stream() // checking if Trade id is same 
 				.filter(line -> tentity.getTradeId().equals(line.getTradeId())).collect(Collectors.toSet());
 		
-		Set<TradeEntity> greaterVersion = sameTrade.stream() // convert list to stream
+		Set<TradeEntity> olderVersion = sameTrade.stream() // checking if version is lower then present  
 				.filter(line -> tentity.getVersion() <line.getVersion()).collect(Collectors.toSet());
 		
-		if(greaterVersion.size()==0)
+		if(olderVersion.size()==0)
 		{
 	
+			// Testing maturity date 
 		if (tentity.getMaturityDate().after(tentity.getCreatedDate())) {
 
 			Set<TradeEntity> result = allTrades.stream() // convert list to stream
@@ -98,6 +124,11 @@ return tradeList ;
 
 	}
 
+	
+	
+	/**
+	 * This Method will start the application along with the scheduler 
+	 */
 	public void start() {
 		logger.info("Application Starting ....");
 
