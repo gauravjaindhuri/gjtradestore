@@ -23,6 +23,6 @@ It will generate gjtradestore-0.0.1-SNAPSHOT.jar under target folder.
 - Click on trade.bat file .
 
 You can perform 3 Tasks 
-Show : This will show all the trades 
-add T4 2 CP-1 B2 11/04/2021 : This will add Trade 4 into system 
-show T2 : This will show you Trade 2 details 
+-**Show** : This will show all the trades 
+-**add T4 2 CP-1 B2 11/04/2021** : This will add Trade 4 into system 
+-**show T2** : This will show you Trade 2 details 
