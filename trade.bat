@@ -1,7 +1,10 @@
 @echo off
 
+echo This Demo is for Trade Store by Gaurav Jain  .
 
-echo This Demo is for Trade Store by Gaurav Jain  . Ther are 3 operations you can perform :
+echo For initial setup of this project Please run 'start'  operation
+
+echo Ther are 3 operations you can perform :
 
 echo show
 echo add T4 2 CP-1 B2 11/04/2021
