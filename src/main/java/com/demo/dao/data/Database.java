@@ -17,6 +17,12 @@ import com.demo.dao.model.TradeEntity;
 import au.com.bytecode.opencsv.CSVReader;
 import au.com.bytecode.opencsv.CSVWriter;
 
+/**
+ * @author Gaurav Jain
+ * 
+ *  This File is holding dummy database and will provide data during execution  
+ *
+ */
 public class Database {
 
 	public Set<TradeEntity> tradeList = new HashSet<TradeEntity>();
@@ -27,6 +33,10 @@ public class Database {
 
 	public static final String TRADE_TABLE = "c:\\Projects\\TRADE_TABLE.csv";
 
+	/**
+	 * Constructor 
+	 * 
+	 */
 	public Database() {
 
 		CounterParty cp1 = new CounterParty("CP-1", "ABC ORG");
@@ -43,12 +53,15 @@ public class Database {
 
 	}
 
+	/**
+	 * This method will provide the initial setup for project this has to be called first before doing any changes .
+	 * 
+	 */
 	public void start() {
 
 		TradeEntity entity1 = new TradeEntity("T1", 1, "CP-1", "B1", new Date(), new Date(), false);
 		TradeEntity entity2 = new TradeEntity("T2", 1, "CP-1", "B1", new Date(), new Date(), false);
 		TradeEntity entity3 = new TradeEntity("T2", 2, "CP-1", "B1", new Date(), new Date(), false);
-		
 
 		tradeList.add(entity1);
 		tradeList.add(entity2);
@@ -78,6 +91,11 @@ public class Database {
 
 	}
 
+	/**
+	 * 
+	 * This method will return all the trades present in database  
+	 * @return
+	 */
 	public Set<TradeEntity> getTradeList() {
 
 		Set<TradeEntity> tradeListLocal = new HashSet<TradeEntity>();
